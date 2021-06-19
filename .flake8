@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 80
+max-complexity = 10
+exclude =
+    .git
+    __pycache__
+    .mypy_cache
+    .pytest_cache
+    .github

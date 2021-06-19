@@ -1,0 +1,54 @@
+name: Python Architecture Linter
+
+on: [push]
+
+jobs:
+  lint-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [3.9]
+        poetry-version: [1.1.6]
+        os: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Install Project Dependencies
+        run: |
+          poetry install
+
+      - name: Lint with black
+        run: |
+          poetry run black . --check
+
+      - name: Lint with mypy
+        run: |
+          poetry run mypy python_architecture_linter
+
+      - name: Lint with flake8
+        run: |
+          poetry run flake8 . --count --show-source --statistics
+
+      - name: Lint with isort
+        run: |
+          poetry run isort . --check
+
+      - name: Test with pytest
+        run: |
+          poetry run coverage run -m pytest python_architecture_linter -x --junitxml=report.xml
+          poetry run coverage report
+          poetry run coverage xml
+
+      - name: Check poetry lock file
+        run: |
+          pip install poetry-lock-check==0.1.0
+          python -m poetry_lock_check check-lock
