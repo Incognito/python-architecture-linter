@@ -34,7 +34,7 @@ jobs:
         run: |
           poetry run mypy python_architecture_linter
 
-      - name: Lint with flake8
+      - name: Lint with flake8 --ignore=E501
         run: |
           poetry run flake8 . --count --show-source --statistics
 

@@ -1,6 +1,7 @@
-import astroid
 from functools import partial
 from operator import is_not
+
+import astroid
 
 
 class Linter:

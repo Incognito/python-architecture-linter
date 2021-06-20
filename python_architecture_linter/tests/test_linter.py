@@ -1,4 +1,4 @@
-from python_architecture_linter.lint_provider_class import linter
+from python_architecture_linter.lint_provider_class import provider_class_linter
 
 
 def test_method_violations():
@@ -49,7 +49,7 @@ def test_method_violations():
             return GpsConsumerProvider(Baz)
     """
 
-    results = linter.lint(class_node)
+    results = provider_class_linter.lint(class_node)
 
     assert results == [
         "invalid method name create_foo",
@@ -67,6 +67,6 @@ def test_wrong_class_name():
         pass
     """
 
-    results = linter.lint(class_node)
+    results = provider_class_linter.lint(class_node)
 
     assert results == ["Provider class names must end with the word Provider"]
