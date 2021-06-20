@@ -33,10 +33,8 @@ def lint(path):
 
     return results
 
-path = "/home/brian/python-architecture-linter/python_architecture_linter/tests/cases/modular_provider_architecture"  # noqa: E501
-lint(path)
 
-path = "/home/brian/visibility-shippeo-egress"  # noqa: E501
+path = "/home/brian/python-architecture-linter/python_architecture_linter/tests/cases/modular_provider_architecture"  # noqa: E501
 results = lint(path)
 
 from functools import partial
