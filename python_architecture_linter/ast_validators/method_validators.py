@@ -1,18 +1,23 @@
 import astroid
 
+from python_architecture_linter.domain_objects.validation_result import invalid_result, valid_result, ValidationResult
 
-def method_name_validator(func_node: astroid.nodes.FunctionDef):
+
+def method_name_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     if not func_node.name.startswith(("provide_", "_provide_", "_create_", "__init__")):
-        return f"invalid method name {func_node.name}"
+        return invalid_result(__file__, f"invalid method name {func_node.name}")
 
 
-def method_arguments_validator(func_node: astroid.nodes.FunctionDef):
+def method_arguments_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     if func_node.name.startswith(("provide_", "_provide_")):
         if not func_node.args.as_string() == "self":
-            return f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self"
+            return invalid_result(
+                __file__,
+                f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self",
+            )
 
 
-def method_logic_validator(func_node: astroid.nodes.FunctionDef):
+def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     allow_list = (
         astroid.nodes.AnnAssign,
         astroid.nodes.Assign,
@@ -39,10 +44,13 @@ def method_logic_validator(func_node: astroid.nodes.FunctionDef):
 
     for node in func_node.body:
         if not isinstance(node, allow_list):
-            return f"Logic found in {func_node.name}, but is not permitted inside provider. found {node.as_string()}. Solve this by moving logic outside of provider."
+            return invalid_result(
+                __file__,
+                f"Logic found in {func_node.name}, but is not permitted inside provider. found {node.as_string()}. Solve this by moving logic outside of provider.",
+            )
 
 
-def method_object_creation_count(func_node: astroid.nodes.FunctionDef):
+def method_object_creation_count(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     def recursive_walk(node):
         try:
             for subnode in node.get_children():
@@ -60,4 +68,7 @@ def method_object_creation_count(func_node: astroid.nodes.FunctionDef):
                 creational_call_count += 1
 
     if creational_call_count > 2:
-        return f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid"
+        return invalid_result(
+            __file__,
+            f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid",
+        )
