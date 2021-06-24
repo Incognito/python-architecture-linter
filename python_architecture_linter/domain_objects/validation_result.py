@@ -1,26 +1,37 @@
 from dataclasses import dataclass
 from functools import partial
 
-
-@dataclass(frozen=True)
-class ValidatiorExplanation:
-    # TODO model it so any data format could end up being supported here
-    message: str
-
-
-@dataclass(frozen=True)
-class ValidationResult:
+# fixme, ValidationResult or ValidationMessage?
+@dataclass(frozen=True) 
+class ValidationResult: 
+    explanation: str
     is_valid: bool
+    location: str
     validator: str
-    explanation: ValidatiorExplanation
 
 
-def validation_factory(is_valid, validator, explanation_message):
-    explanation = ValidatiorExplanation(message=explanation_message)
-    result = ValidationResult(is_valid=is_valid, validator=validator, explanation=explanation)
+# todo make a base class for other message builders
+class AstValidationMessageBuilder:
+    def __init__(self, validator, location):
+        self._validator = validator
+        self._location = self._location_node_to_string(location)
 
-    return result
+    def _location_node_to_string(self, location_node) -> str:
+        return ":".join([location_node.root().file, str(location_node.fromlineno)])
 
+    def _validation_factory(self, is_valid, validator, location, explanation) -> ValidationResult:
+        validator_as_string=".".join([validator.__module__, validator.__name__]) 
+        result = ValidationResult(
+            explanation=explanation,
+            is_valid=is_valid,
+            location=location,
+            validator=validator_as_string,
+        )
 
-invalid_result = partial(validation_factory, False)
-valid_result = partial(validation_factory, True)
+        return result
+
+    def invalid_result(self, explanation) -> ValidationResult:
+        return self._validation_factory(False, self._validator, self._location, explanation)
+
+    def valid_result(self, explanation) -> ValidationResult:
+        return self._validation_factory(True, self._validator, self._location, explanation)

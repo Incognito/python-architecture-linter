@@ -12,9 +12,9 @@ def hello(path, show_success):
     """Runs linter and reports results."""
     results = lint(path)
 
-    table = [asdict(result) for result in results if result.is_valid == False ]
+    table = [asdict(result) for result in results if not result.is_valid or show_success ]
     headers = []
-    print(tabulate(table, headers="keys", tablefmt="plain"))
+    print(tabulate(table, headers="keys", tablefmt="pipe"))
 
 if __name__ == '__main__':
     hello()

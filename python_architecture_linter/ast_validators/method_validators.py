@@ -1,26 +1,40 @@
 import astroid
 
-from python_architecture_linter.domain_objects.validation_result import invalid_result, valid_result, ValidationResult
+from python_architecture_linter.domain_objects.validation_result import AstValidationMessageBuilder, ValidationResult
 
 
 def method_name_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
-    if not func_node.name.startswith(("provide_", "_provide_", "_create_", "__init__")):
-        return invalid_result(__file__, f"invalid method name {func_node.name}")
+    message = AstValidationMessageBuilder(
+        validator=method_name_validator,
+        location=func_node
+    )
 
-    return valid_result(__file__, f"valid method name {func_node.name}")
+    if not func_node.name.startswith(("provide_", "_provide_", "_create_", "__init__")):
+        return message.invalid_result('Invalid method name {func_node.name}, found one of "provide_", "_provide_", "_create_", "__init__"')
+
+    return message.valid_result("No issues found")
 
 
 def method_arguments_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
+    message = AstValidationMessageBuilder(
+        validator=method_arguments_validator,
+        location=func_node
+    )
+
     if func_node.name.startswith(("provide_", "_provide_")):
         if not func_node.args.as_string() == "self":
-            return invalid_result(
-                __file__,
+            return message.invalid_result(
                 f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self",
             )
-    return valid_result(__file__, f"valid argument list")
+    return message.valid_result("No issues found")
 
 
 def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
+    message = AstValidationMessageBuilder(
+        validator=method_logic_validator,
+        location=func_node
+    )
+
     allow_list = (
         astroid.nodes.AnnAssign,
         astroid.nodes.Assign,
@@ -49,15 +63,19 @@ def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationRe
         if not isinstance(node, allow_list):
 
             # fixme should report all issues not just the first one
-            return invalid_result(
-                __file__,
+            return message.invalid_result(
                 f"Logic found in {func_node.name}, but is not permitted inside provider. found {node.as_string()}. Solve this by moving logic outside of provider.",
             )
 
-    return valid_result(__file__, f"no logic was found inside provider")
+    return message.valid_result("No issues found")
 
 
 def method_object_creation_count(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
+    message = AstValidationMessageBuilder(
+        validator=method_object_creation_count,
+        location=func_node
+    )
+
     def recursive_walk(node):
         try:
             for subnode in node.get_children():
@@ -75,9 +93,8 @@ def method_object_creation_count(func_node: astroid.nodes.FunctionDef) -> Valida
                 creational_call_count += 1
 
     if creational_call_count > 2:
-        return invalid_result(
-            __file__,
+        return message.invalid_result(
             f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid",
         )
 
-    return valid_result(__file__, f"only a few objects were created inside provider method")
+    return message.valid_result("No issues found")
