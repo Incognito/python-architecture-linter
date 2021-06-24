@@ -7,6 +7,8 @@ def method_name_validator(func_node: astroid.nodes.FunctionDef) -> ValidationRes
     if not func_node.name.startswith(("provide_", "_provide_", "_create_", "__init__")):
         return invalid_result(__file__, f"invalid method name {func_node.name}")
 
+    return valid_result(__file__, f"valid method name {func_node.name}")
+
 
 def method_arguments_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     if func_node.name.startswith(("provide_", "_provide_")):
@@ -15,6 +17,7 @@ def method_arguments_validator(func_node: astroid.nodes.FunctionDef) -> Validati
                 __file__,
                 f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self",
             )
+    return valid_result(__file__, f"valid argument list")
 
 
 def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
@@ -44,10 +47,14 @@ def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationRe
 
     for node in func_node.body:
         if not isinstance(node, allow_list):
+
+            # fixme should report all issues not just the first one
             return invalid_result(
                 __file__,
                 f"Logic found in {func_node.name}, but is not permitted inside provider. found {node.as_string()}. Solve this by moving logic outside of provider.",
             )
+
+    return valid_result(__file__, f"no logic was found inside provider")
 
 
 def method_object_creation_count(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
@@ -72,3 +79,5 @@ def method_object_creation_count(func_node: astroid.nodes.FunctionDef) -> Valida
             __file__,
             f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid",
         )
+
+    return valid_result(__file__, f"only a few objects were created inside provider method")

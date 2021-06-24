@@ -1,5 +1,7 @@
 import astroid
+from typing import List
 
+from python_architecture_linter.domain_objects.validation_result import ValidationResult
 
 # todo this class is mixing validation and navigation together
 class Linter:
@@ -8,7 +10,7 @@ class Linter:
         self._class_validators = class_validators
         self._method_validators = method_validators
 
-    def lint(self, module_node: astroid.nodes.Module):
+    def lint(self, module_node: astroid.nodes.Module) -> List[ValidationResult]:
         messages = []
 
         for validator in self._module_validators:

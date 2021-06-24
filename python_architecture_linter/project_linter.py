@@ -29,19 +29,7 @@ def lint(path):
     results = []
     for provider_file in provider_files:
         # rule: provider may be in module/provider.py
-        results.append(validate_provider(provider_file))
+        validated_results = validate_provider(provider_file)
+        results = [*results, *validated_results]
 
     return results
-
-
-path = "/home/brian/python-architecture-linter/python_architecture_linter/tests/cases/modular_provider_architecture"  # noqa: E501
-results = lint(path)
-
-from functools import partial
-from operator import is_not
-
-for result in results:
-    for r in result:
-        if r is not None:
-            if not r.is_valid:
-                print(r.explanation.message)

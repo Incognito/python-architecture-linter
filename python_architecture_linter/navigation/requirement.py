@@ -3,7 +3,6 @@ from __future__ import annotations
 import astroid
 
 
-
 class Structure:
     def requires(self, validators) -> Structure:
         self._validators = validators
@@ -30,14 +29,17 @@ class StructureWalker:
 
     def _requirement_walker(self):
         # fixme, accesses private
+        for requirement in project_structure._validators:
+            requirement
+
         for requirement in project_structure._must_have:
-            requiremt
+            requirement
 
         for requirement in project_structure._may_have:
-            requiremt
+            requirement
 
         for requirement in project_structure._must_not_have:
-            requiremt
+            requirement
 
 from python_architecture_linter.ast_validators.module_validators import (validate_provider_module_contents)
 from python_architecture_linter.ast_validators.class_validators import (
@@ -88,3 +90,12 @@ runtime_module_folders.must_have([run_file])
 project = Structure()
 project.must_have([module_folders])
 project.may_have([runtime_module_folders])
+
+
+
+converters = [
+    project_to_files
+    files_to_module_ast
+    module_ast_to_classes
+    classes_to_methods
+]

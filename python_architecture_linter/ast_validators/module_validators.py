@@ -20,3 +20,6 @@ def validate_provider_module_contents(func_node: astroid.nodes.Module) -> Valida
                 __file__,
                 "Providers are only intended to wire together things that exist. Anything other than importing and connecting some code with other code is a convention violation for providers",
             )
+
+        return valid_result(__file__, "Provider file only contains a provider")
+
