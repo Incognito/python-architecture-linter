@@ -14,7 +14,7 @@ def hello(path, show_success):
 
     table = [asdict(result) for result in results if not result.is_valid or show_success ]
     headers = []
-    print(tabulate(table, headers="keys", tablefmt="pipe"))
+    print(tabulate(table, headers="keys", tablefmt="plain"))
 
 if __name__ == '__main__':
     hello()

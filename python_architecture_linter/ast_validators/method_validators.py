@@ -64,7 +64,7 @@ def method_logic_validator(func_node: astroid.nodes.FunctionDef) -> ValidationRe
 
             # fixme should report all issues not just the first one
             return message.invalid_result(
-                f"Logic found in {func_node.name}, but is not permitted inside provider. found {node.as_string()}. Solve this by moving logic outside of provider.",
+                f"Logic found in {func_node.name}, but is not permitted inside provider. Solve this by moving logic outside of provider.",
             )
 
     return message.valid_result("No issues found")

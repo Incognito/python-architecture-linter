@@ -2,27 +2,6 @@ from __future__ import annotations
 
 import astroid
 
-
-class Structure:
-    def requires(self, validators) -> Structure:
-        self._validators = validators
-
-    def must_have(self, requirements) -> Structure:
-        self._must_have = requirements
-
-        return self
-
-    def may_have(self, requirements) -> Structure:
-        self._may_have = requirements
-
-        return self
-
-    def must_not_have(self, requirements) -> Structure:
-        self._must_not_have = requirements
-
-        return self
-
-
 class StructureWalker:
     def walk_requirements(self, structure: Structure):
         self._requirement_walker(structure)
