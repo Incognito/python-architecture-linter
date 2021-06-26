@@ -1,6 +1,6 @@
-from python_architecture_linter.linter import lint
-
 from modular_provider_architecture_definition.definition import project
+
+from python_architecture_linter.linter import lint
 
 
 def test_definition():

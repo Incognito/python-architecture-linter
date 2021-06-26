@@ -1,8 +1,8 @@
 import astroid
 
-from python_architecture_linter.tree_structure.structure import Structure
-
 from python_architecture_linter.linter import lint
+from python_architecture_linter.tree_structure import Structure
+
 
 def test_structure():
     # todo fix test

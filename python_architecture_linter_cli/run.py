@@ -1,11 +1,13 @@
+from dataclasses import asdict
 from typing import Any
 
 import click
+from modular_provider_architecture_definition.definition import (  # fixme, should not bind generic CLI to any specific definition
+    project,
+)
 from tabulate import tabulate
-from dataclasses import asdict
 
 from python_architecture_linter.linter import lint
-from modular_provider_architecture_definition.definition import project  # fixme, should not bind generic CLI to any specific definition 
 
 
 @click.command()

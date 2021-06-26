@@ -1,13 +1,19 @@
-from astroid.nodes import NodeNG
-from typing import List, Iterable, Tuple
+from typing import Iterable, Tuple
 
-from python_architecture_linter.domain_objects.validation_result import AstValidationMessageBuilder, ValidationResult
+import astroid
+
+from python_architecture_linter.domain_objects.validation_result import (
+    AstValidationMessageBuilder,
+    ValidationResult,
+)
 
 
-def validate_node_children_exclusive_allow_list(allow_list: Tuple[NodeNG], module_node: NodeNG) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=validate_node_children_exclusive_allow_list, location=module_node)
+def validate_node_children_exclusive_allow_list(
+    allow_list: Tuple[astroid.node_classes.NodeNG], node: astroid.node_classes.NodeNG
+) -> ValidationResult:
+    message = AstValidationMessageBuilder(validator=validate_node_children_exclusive_allow_list, location=node)
 
-    for node in node.get_children()
+    for node in node.get_children():
         if not isinstance(node, allow_list):
             # todo return multiple instead of just 1
             # todo also include the list of what is valid here
@@ -15,10 +21,13 @@ def validate_node_children_exclusive_allow_list(allow_list: Tuple[NodeNG], modul
 
     return message.valid_result("No issues found")
 
-def validate_node_descendants_allow_list(allow_list: Tuple[NodeNG], module_node: NodeNG) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=validate_node_descendants_allow_list, location=module_node)
 
-    for node in node.get_children()
+def validate_node_descendants_allow_list(
+    allow_list: Tuple[astroid.node_classes.NodeNG], node: astroid.node_classes.NodeNG
+) -> ValidationResult:
+    message = AstValidationMessageBuilder(validator=validate_node_descendants_allow_list, location=node)
+
+    for node in node.get_children():
         if not isinstance(node, allow_list):
             # todo return multiple instead of just 1
             # todo also include the list of what is valid here
@@ -26,11 +35,13 @@ def validate_node_descendants_allow_list(allow_list: Tuple[NodeNG], module_node:
 
     return message.valid_result("No issues found")
 
-    def recursive_walk(node):
-        try:
-            for subnode in node.get_children():
-                yield subnode
-                yield from recursive_walk(subnode)
 
-        except (AttributeError, TypeError):
-            yield node
+# todo this doesn't really belong in "validators", probably better as a navigator.
+def recursive_walk(node: astroid.node_classes.NodeNG) -> Iterable[astroid.node_classes.NodeNG]:
+    try:
+        for subnode in node.get_children():
+            yield subnode
+            yield from recursive_walk(subnode)
+
+    except (AttributeError, TypeError):
+        yield node

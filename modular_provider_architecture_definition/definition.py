@@ -1,48 +1,35 @@
 import astroid
-
-from python_architecture_linter.tree_structure.structure import Structure
-
-from python_architecture_linter.ast_validators.module_validators import validate_provider_module_contents
-from python_architecture_linter.ast_validators.class_validators import (
-    class_name_validator,
+from modular_provider_architecture_definition.validators import (
+    must_create_few_objects_in_provider_method,
+    must_have_modular_folders,
+    must_have_no_arguments_in_provider_method,
+    must_not_contain_logic,
+    must_not_create_instances_except_dataclasses,
+    must_only_be_in_modules,
+    must_only_be_in_run_modules,
+    must_only_have_provider_in_module_root,
+    must_only_import_and_define_classes,
+    must_only_import_internals_or_other_providers,
+    must_suffix_provider_classes,
+    must_use_provider_method_names,
 )
-from python_architecture_linter.ast_validators.method_validators import (
-    method_arguments_validator,
-    method_logic_validator,
-    method_name_validator,
-    method_object_creation_count,
+
+from python_architecture_linter.node_navigators import (
+    ast_node_to_specific_children,
+    file_to_ast,
+    project_to_files,
 )
-
-
-def must_only_be_in_run_modules():
-    pass
-
-
-def must_have_modular_folders():
-    pass
-
-def must_only_import_internals_or_other_providers():
-    pass
-
-def must_not_create_instances_except_dataclasses():
-    pass
-
-def must_only_be_in_modules():
-    pass
-
+from python_architecture_linter.tree_structure import Structure
 
 provider_ast_method = Structure("PROVIDER_AST_METHOD", {})
 provider_ast_method.must(
     [
-        method_name_validator,
-        method_arguments_validator,
-        method_logic_validator,
-        method_object_creation_count,
+        must_use_provider_method_names,
     ]
 )
 
 provider_ast_class = Structure("PROVIDER_AST_CLASS", {"PROVIDER_AST_METHOD": lambda x: x})  # todo
-provider_ast_class.must([class_name_validator])
+provider_ast_class.must([must_suffix_provider_classes])
 
 provider_ast_import = Structure("PROVIDER_AST_IMPORT", {})
 provider_ast_import.must([must_only_import_internals_or_other_providers])
@@ -50,10 +37,10 @@ provider_ast_import.must([must_only_import_internals_or_other_providers])
 provider_ast_module = Structure(
     "PROVIDER_AST_MODULE", {"PROVIDER_AST_CLASS": lambda x: x, "PROVIDER_AST_IMPORT": lambda x: x}  # todo  # todo
 )
-provider_ast_module.must([validate_provider_module_contents])
+provider_ast_module.must([must_only_import_and_define_classes])
 provider_ast_module.has([provider_ast_import, provider_ast_class])
 
-provider_files = Structure("PROVIDER_FILES", {"PROVIDER_AST": file_to_provider_ast})
+provider_files = Structure("PROVIDER_FILES", {"PROVIDER_AST": lambda x: x})
 provider_files.must([must_only_have_provider_in_module_root])
 
 logic_ast_module = Structure("LOGIC_AST_MODULE", {})
