@@ -1,7 +1,10 @@
 from functools import partial
-from typing import Tuple, Iterable
+from typing import Tuple, Iterable, List
 
 import astroid
+
+from python_architecture_linter.domain_objects.file import File
+from python_architecture_linter.domain_objects.validation_result import ValidationResult
 
 from python_architecture_linter.ast_validators.class_validators import (
     class_name_suffix_validator,
@@ -20,27 +23,57 @@ from python_architecture_linter.domain_objects.validation_result import (
 
 
 def must_only_have_provider_in_module_root(fixme) -> ValidationResult:
-    pass
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
 def must_only_be_in_run_modules(fixme) -> ValidationResult:
-    pass
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
-def must_have_modular_folders(fixme) -> ValidationResult:
-    pass
+def must_have_modular_folders(files: List[File]) -> ValidationResult:
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
 def must_only_import_internals_or_other_providers(fixme) -> ValidationResult:
-    pass
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
 def must_not_create_instances_except_dataclasses(fixme) -> ValidationResult:
-    pass
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
 def must_only_be_in_modules(fixme) -> ValidationResult:
-    pass
+    return ValidationResult(
+        explanation="No issues found",
+        is_valid=True,
+        location="fixme",
+        validator="fixme",
+    )
 
 
 must_use_provider_method_names = partial(

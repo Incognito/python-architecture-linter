@@ -13,8 +13,4 @@ def test_structure():
     sut_root.must([project_must])
     sut_root.has([sut_file])
 
-    path = "/home/brian/python-architecture-linter/python_architecture_linter/tests/cases/modular_provider_architecture"  # noqa: E501
-
-    results = sut_project
-
     assert results == []
