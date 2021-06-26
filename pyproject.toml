@@ -8,6 +8,9 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 astroid = "^2.5.8"
+click = "^8.0.1"
+tabulate = "^0.8.9"
+types-tabulate = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -24,7 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.black]
-line-length = 80
+line-length = 120
 exclude = '''
 /(
     \.git
