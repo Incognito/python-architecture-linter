@@ -1,5 +1,8 @@
-import astroid
 from functools import partial
+from pathlib import Path
+from typing import List
+
+import astroid
 from modular_provider_architecture_definition.validators import (
     must_create_few_objects_in_provider_method,
     must_have_modular_folders,
@@ -18,8 +21,8 @@ from modular_provider_architecture_definition.validators import (
 from python_architecture_linter.node_navigators import (
     ast_node_to_specific_children,
     file_to_ast,
+    project_to_file_filtered,
     project_to_files,
-    project_to_file,
 )
 from python_architecture_linter.tree_structure import Structure
 
@@ -70,20 +73,28 @@ run_file.must([must_only_be_in_run_modules])
 all_files = Structure("ALL_FILES", {})
 all_files.must([must_have_modular_folders])
 
+
+def filename_filter(file_name: str, path: Path) -> bool:
+    return path.name == file_name
+
+
+def filename_exclusion_filter(file_names: List[str], path: Path) -> bool:
+    return path.name not in file_names
+
+
+run_file_filter = partial(filename_filter, "run.py")
+provider_file_filter = partial(filename_filter, "provider.py")
+logic_file_filter = partial(filename_exclusion_filter, ["provider.py", "run.py"])
+
 project = Structure(
     "PROJECT",
     {
         "ALL_FILES": project_to_files,
-        "RUN_FILE": project_to_file,  # todo make a filter
-        "PROVIDER_FILE": project_to_file,  # todo make a filter
-        "LOGIC_FILE": project_to_file,  # todo make a filter # exclude providers and runtimes
+        "RUN_FILE": partial(project_to_file_filtered, run_file_filter),
+        "PROVIDER_FILE": partial(project_to_file_filtered, provider_file_filter),
+        "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter)
         # todo: dependency graph
     },
 )
 project.must([])
-project.has([
-    all_files,
-    provider_file,
-    #run_file,
-    #logic_file
-])
+project.has([all_files, provider_file, run_file, logic_file])

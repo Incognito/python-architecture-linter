@@ -1,10 +1,7 @@
 from functools import partial
-from typing import Tuple, Iterable, List
+from typing import Iterable, List, Tuple
 
 import astroid
-
-from python_architecture_linter.domain_objects.file import File
-from python_architecture_linter.domain_objects.validation_result import ValidationResult
 
 from python_architecture_linter.ast_validators.class_validators import (
     class_name_suffix_validator,
@@ -16,6 +13,7 @@ from python_architecture_linter.ast_validators.nodeng_validator import (
     validate_node_children_exclusive_allow_list,
     validate_node_descendants_allow_list,
 )
+from python_architecture_linter.domain_objects.file import File
 from python_architecture_linter.domain_objects.validation_result import (
     AstValidationMessageBuilder,
     ValidationResult,

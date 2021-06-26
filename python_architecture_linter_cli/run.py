@@ -14,8 +14,8 @@ from python_architecture_linter.linter import lint
 @click.command()
 @click.argument(
     "path",
-    default = os.path.dirname(os.path.realpath(__file__)) +
-    "/../modular_provider_architecture_definition/tests/cases/modular_provider_architecture",  # noqa: E501
+    default=os.path.dirname(os.path.realpath(__file__))
+    + "/../modular_provider_architecture_definition/tests/cases/modular_provider_architecture",  # noqa: E501
 )
 @click.option("--show-success", default=0, help="Show successful validation attempts too")
 def hello(path: str, show_success: bool) -> Any:

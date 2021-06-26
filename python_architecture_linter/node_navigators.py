@@ -1,24 +1,34 @@
 from pathlib import Path
-from typing import Iterable, Tuple, Union
+from typing import Callable, Iterable, Tuple, Union
 
 import astroid
 
 from python_architecture_linter.domain_objects.file import File
 
+
 # todo find better names, to_files and to_file is easy to conflate
-def project_to_files(project_path) -> Iterable[File]:
+def project_to_files(project_path: str) -> Iterable[File]:
     """
     When you want all files at the same time
     """
     paths = Path(project_path).glob("**/*.py")
     yield [File(path) for path in paths]
 
-def project_to_file(project_path) -> Iterable[File]:
+
+def project_to_file(project_path: str) -> Iterable[File]:
     """
     When you want files one-by-one
     """
     paths = Path(project_path).glob("**/*.py")
     yield from (File(path) for path in paths)
+
+
+def project_to_file_filtered(file_filter: Callable[[Path], bool], project_path: str) -> Iterable[File]:
+    """
+    When you want files one-by-one
+    """
+    paths = Path(project_path).glob("**/*.py")
+    yield from (File(path) for path in paths if file_filter(path))
 
 
 def file_to_ast(file: File) -> Iterable[astroid.node_classes.NodeNG]:
