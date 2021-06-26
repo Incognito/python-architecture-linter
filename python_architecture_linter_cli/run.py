@@ -6,7 +6,6 @@ import click
 from modular_provider_architecture_definition.definition import (  # fixme, should not bind generic CLI which is provided a specific definition
     project,
 )
-from tabulate import tabulate
 
 from python_architecture_linter.linter import lint
 
@@ -22,9 +21,16 @@ def hello(path: str, show_success: bool) -> Any:
     """Runs linter and reports results."""
     results = list(lint(project, path))
 
-    table = [asdict(result) for result in results if not result.is_valid or show_success]
-    print(path)
-    print(tabulate(table, headers="keys", tablefmt="simple"))
+    def display(result):
+        if result.is_valid:
+            click.secho(result.validator, bg="green")
+        else:
+            click.secho(result.validator, bg="red")
+        click.echo(result.location)
+        click.echo(result.explanation)
+        click.echo("")
+
+    [display(result) for result in results if not result.is_valid or show_success]
 
 
 if __name__ == "__main__":

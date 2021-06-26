@@ -5,15 +5,11 @@ from typing import List
 import astroid
 from modular_provider_architecture_definition.validators import (
     must_create_few_objects_in_provider_method,
-    must_have_modular_folders,
     must_have_no_arguments_in_provider_method,
     must_not_contain_logic,
-    must_not_create_instances_except_dataclasses,
-    must_only_be_in_modules,
     must_only_be_in_run_modules,
     must_only_have_provider_in_module_root,
     must_only_import_and_define_classes,
-    must_only_import_internals_or_other_providers,
     must_suffix_provider_classes,
     must_use_provider_method_names,
 )
@@ -36,13 +32,17 @@ provider_ast_method.must(
     ]
 )
 
-node_to_function_nodes = partial(ast_node_to_specific_children, (astroid.nodes.ClassDef))
+node_to_function_nodes = partial(ast_node_to_specific_children, (astroid.nodes.FunctionDef))
 provider_ast_class = Structure("PROVIDER_AST_CLASS", {"PROVIDER_AST_METHOD": node_to_function_nodes})
-provider_ast_class.must([must_suffix_provider_classes])
 provider_ast_class.has([provider_ast_method])
+provider_ast_class.must([must_suffix_provider_classes])
 
 provider_ast_import = Structure("PROVIDER_AST_IMPORT", {})
-provider_ast_import.must([must_only_import_internals_or_other_providers])
+provider_ast_import.must(
+    [
+        # must_only_import_internals_or_other_providers
+    ]
+)
 
 node_to_import_nodes = partial(ast_node_to_specific_children, (astroid.nodes.Import, astroid.nodes.ImportFrom))
 node_to_class_nodes = partial(ast_node_to_specific_children, (astroid.nodes.ClassDef))
@@ -53,11 +53,14 @@ provider_ast_module.must([must_only_import_and_define_classes])
 provider_ast_module.has([provider_ast_import, provider_ast_class])
 
 provider_file = Structure("PROVIDER_FILE", {"PROVIDER_AST_MODULE": file_to_ast})
-provider_file.must([must_only_have_provider_in_module_root])
 provider_file.has([provider_ast_module])
 
 logic_ast_module = Structure("LOGIC_AST_MODULE", {})
-logic_ast_module.must([must_not_create_instances_except_dataclasses])
+logic_ast_module.must(
+    [
+        # disallow provider imports
+    ]
+)
 
 logic_file = Structure(
     "LOGIC_FILE",
@@ -65,13 +68,10 @@ logic_file = Structure(
         "LOGIC_AST_MODULE": file_to_ast,
     },
 )
-logic_file.must([must_only_be_in_modules])
+logic_file.has([logic_ast_module])
 
 run_file = Structure("RUN_FILE", {})
 run_file.must([must_only_be_in_run_modules])
-
-all_files = Structure("ALL_FILES", {})
-all_files.must([must_have_modular_folders])
 
 
 def filename_filter(file_name: str, path: Path) -> bool:
@@ -89,12 +89,15 @@ logic_file_filter = partial(filename_exclusion_filter, ["provider.py", "run.py"]
 project = Structure(
     "PROJECT",
     {
-        "ALL_FILES": project_to_files,
         "RUN_FILE": partial(project_to_file_filtered, run_file_filter),
         "PROVIDER_FILE": partial(project_to_file_filtered, provider_file_filter),
         "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter)
         # todo: dependency graph
     },
 )
-project.must([])
-project.has([all_files, provider_file, run_file, logic_file])
+project.must(
+    [
+        must_only_have_provider_in_module_root,
+    ]
+)
+project.has([provider_file, run_file, logic_file])

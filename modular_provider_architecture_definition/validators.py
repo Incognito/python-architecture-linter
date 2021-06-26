@@ -1,4 +1,5 @@
 from functools import partial
+from pathlib import Path
 from typing import Iterable, List, Tuple
 
 import astroid
@@ -20,57 +21,49 @@ from python_architecture_linter.domain_objects.validation_result import (
 )
 
 
-def must_only_have_provider_in_module_root(fixme) -> ValidationResult:
+def must_only_have_provider_in_module_root(project_path: str) -> ValidationResult:
+
+    paths = Path(project_path).glob("**/provider.py")
+    paths_relative_to_project = [path.relative_to(project_path) for path in paths]
+
+    providers_not_in_module_root = [path for path in paths_relative_to_project if len(path.parts) != 3]
+
+    if len(providers_not_in_module_root) > 0:
+        explanation = "provider.py files are meant to wire together one module, and modules are meant to be one level deep. Providers were found that are not at the root level of a module. \n"
+
+        for provider in providers_not_in_module_root:
+            explanation += f"- {provider}\n"
+
+        return ValidationResult(
+            explanation=explanation,
+            is_valid=False,
+            location=project_path,
+            validator="must_only_have_provider_in_module_root",
+        )
+
     return ValidationResult(
         explanation="No issues found",
         is_valid=True,
-        location="fixme",
-        validator="fixme",
+        location=project_path,
+        validator="must_only_have_provider_in_module_root",
     )
 
 
-def must_only_be_in_run_modules(fixme) -> ValidationResult:
+def must_only_be_in_run_modules(run_file: File) -> ValidationResult:
+
+    if not str(run_file.get_path().absolute()).endswith("_runtime/run.py"):
+        return ValidationResult(
+            explanation="Run.py files are only allowed in the root of runtime modules",
+            is_valid=False,
+            location=run_file.get_path(),
+            validator="must_only_be_in_run_modules",
+        )
+
     return ValidationResult(
         explanation="No issues found",
         is_valid=True,
-        location="fixme",
-        validator="fixme",
-    )
-
-
-def must_have_modular_folders(files: List[File]) -> ValidationResult:
-    return ValidationResult(
-        explanation="No issues found",
-        is_valid=True,
-        location="fixme",
-        validator="fixme",
-    )
-
-
-def must_only_import_internals_or_other_providers(fixme) -> ValidationResult:
-    return ValidationResult(
-        explanation="No issues found",
-        is_valid=True,
-        location="fixme",
-        validator="fixme",
-    )
-
-
-def must_not_create_instances_except_dataclasses(fixme) -> ValidationResult:
-    return ValidationResult(
-        explanation="No issues found",
-        is_valid=True,
-        location="fixme",
-        validator="fixme",
-    )
-
-
-def must_only_be_in_modules(fixme) -> ValidationResult:
-    return ValidationResult(
-        explanation="No issues found",
-        is_valid=True,
-        location="fixme",
-        validator="fixme",
+        location=run_file.get_path(),
+        validator="must_only_be_in_run_modules",
     )
 
 
@@ -80,7 +73,7 @@ must_use_provider_method_names = partial(
 must_suffix_provider_classes = partial(class_name_suffix_validator, "Provider")
 
 must_only_import_and_define_classes = partial(
-    validate_node_descendants_allow_list,
+    validate_node_children_exclusive_allow_list,
     (
         astroid.nodes.Import,
         astroid.nodes.ImportFrom,
@@ -89,13 +82,15 @@ must_only_import_and_define_classes = partial(
 )
 
 must_not_contain_logic = partial(
-    validate_node_children_exclusive_allow_list,
+    validate_node_descendants_allow_list,
     (
         astroid.nodes.AnnAssign,
         astroid.nodes.Assign,
+        astroid.nodes.Arguments,
         astroid.nodes.AssignAttr,
         astroid.nodes.AssignName,
         astroid.nodes.Call,
+        astroid.nodes.Decorators,
         astroid.nodes.Const,
         astroid.nodes.Dict,
         astroid.nodes.Ellipsis,
@@ -137,18 +132,20 @@ def must_create_few_objects_in_provider_method(func_node: astroid.nodes.Function
             if not (function_path.startswith("self.") or function_path.endswith("Provider")):
                 creational_call_count += 1
 
-    if creational_call_count > 2:
+    if creational_call_count > 4:
         return message.invalid_result(
             f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid",
         )
 
     return message.valid_result("No issues found")
 
-    def recursive_walk(node: astroid.node_classes.NodeNG) -> Iterable[astroid.node_classes.NodeNG]:
-        try:
-            for subnode in node.get_children():
-                yield subnode
-                yield from recursive_walk(subnode)
 
-        except (AttributeError, TypeError):
-            yield node
+# fixme, duplicate with core
+def recursive_walk(node: astroid.node_classes.NodeNG) -> Iterable[astroid.node_classes.NodeNG]:
+    try:
+        for subnode in node.get_children():
+            yield subnode
+            yield from recursive_walk(subnode)
+
+    except (AttributeError, TypeError):
+        yield node
