@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from functools import partial
+
 
 # fixme, ValidationResult or ValidationMessage?
-@dataclass(frozen=True) 
-class ValidationResult: 
+@dataclass(frozen=True)
+class ValidationResult:
     explanation: str
     is_valid: bool
     location: str
@@ -20,7 +20,7 @@ class AstValidationMessageBuilder:
         return ":".join([location_node.root().file, str(location_node.fromlineno)])
 
     def _validation_factory(self, is_valid, validator, location, explanation) -> ValidationResult:
-        validator_as_string=".".join([validator.__module__, validator.__name__]) 
+        validator_as_string = ".".join([validator.__module__, validator.__name__])
         result = ValidationResult(
             explanation=explanation,
             is_valid=is_valid,

@@ -9,6 +9,5 @@ class File:
     def get_path(self) -> Path:
         return self._path
 
-    @cache
     def get_contents(self) -> str:
         return self._path.read_text()
