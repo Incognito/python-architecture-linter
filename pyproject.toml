@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "python-architecture-linter"
 version = "0.1.0"
-description = "Lints architectures"
+description = "monorepo for the python architecture linter"
 authors = ["Brian Graham <Brian@statagroup.com>"]
 license = "MIT"
 

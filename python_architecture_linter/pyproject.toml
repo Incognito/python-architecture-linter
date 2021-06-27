@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "python-architecture-linter"
+version = "0.1.0"
+description = "Core lib that lints architectures"
+authors = ["Brian Graham <Brian@statagroup.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+astroid = "^2.5.8"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

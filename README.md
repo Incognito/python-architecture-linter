@@ -18,7 +18,7 @@ poetry run python python_architecture_linter_cli/run.py /home/brian/target-proje
 
 1. Define your architecture using a tree of Structure() instances
 1. Add validators to validate a structure
-1. Add node navigators to move to a deepr sub-structure
+1. Add node navigators to move to a deeper sub-structure
 1. Run the command line from your project (for example, in a CI pipeline or in
    local development)
 
@@ -71,7 +71,7 @@ in your project or a stand-alone pypi package.
 If you wish to extend usage beyond the core linter library and provide (as an
 example) grimp support to validate imports over the project are working
 intended you could add that logic to your own framework definition, or package
-it up for re-use as a generic library that can be open-sourced (in wich case
+it up for re-use as a generic library that can be open-sourced (in which case
 you'd just consume it in your framework definition as if it were public).
 
 This keeps releases minimal and prevents version conflicts. For example, if the
@@ -114,9 +114,9 @@ component with a fork instead of replacing the entire library with a fork.
 # Design Principles
 1. Use generators to prevent the memory buildups that are common in other code
    quality tools and fail to work on average computers for on large projects,
-or sometimes with large rulesets.
+or sometimes with large rule-sets.
 2. You can easily escape the limitations of the framework when you encounter an
-   edgecase. If you need your own validators you should be able to do it
+   edge-case. If you need your own validators you should be able to do it
 without rewriting a lot of unrelated code.
 3. Project definitions are stand-alone projects.
 4. Runtimes are stand-alone projects that consume a core.
