@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 
-# fixme, ValidationResult or ValidationMessage?
 @dataclass(frozen=True)
 class ValidationResult:
     explanation: str
@@ -11,7 +10,7 @@ class ValidationResult:
 
 
 # todo make a base class for other message builders
-class AstValidationMessageBuilder:
+class AstValidationResultBuilder:
     def __init__(self, validator, location):
         self._validator = validator
         self._location = self._location_node_to_string(location)
@@ -30,8 +29,8 @@ class AstValidationMessageBuilder:
 
         return result
 
-    def invalid_result(self, explanation) -> ValidationResult:
+    def invalid_result(self, explanation: str) -> ValidationResult:
         return self._validation_factory(False, self._validator, self._location, explanation)
 
-    def valid_result(self, explanation) -> ValidationResult:
+    def valid_result(self, explanation: str) -> ValidationResult:
         return self._validation_factory(True, self._validator, self._location, explanation)

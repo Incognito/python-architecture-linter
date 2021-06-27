@@ -1,4 +1,4 @@
-from modular_provider_architecture.runtime_module.provider import RuntimeProvider
+from modular_provider_architecture.module_runtime.provider import RuntimeProvider
 
 if __name__ == "__main__":
     provider = RuntimeProvider()

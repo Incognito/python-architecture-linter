@@ -3,13 +3,13 @@ from typing import Tuple
 import astroid
 
 from python_architecture_linter.domain_objects.validation_result import (
-    AstValidationMessageBuilder,
+    AstValidationResultBuilder,
     ValidationResult,
 )
 
 
 def method_name_prefix_validator(prefixes: Tuple[str], func_node: astroid.nodes.FunctionDef) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=method_name_prefix_validator, location=func_node)
+    message = AstValidationResultBuilder(validator=method_name_prefix_validator, location=func_node)
 
     if not func_node.name.startswith(prefixes):
         return message.invalid_result(

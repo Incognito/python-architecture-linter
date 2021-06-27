@@ -3,7 +3,7 @@ from typing import Iterable, Tuple
 import astroid
 
 from python_architecture_linter.domain_objects.validation_result import (
-    AstValidationMessageBuilder,
+    AstValidationResultBuilder,
     ValidationResult,
 )
 
@@ -11,7 +11,7 @@ from python_architecture_linter.domain_objects.validation_result import (
 def validate_node_children_exclusive_allow_list(
     allow_list: Tuple[astroid.node_classes.NodeNG], node: astroid.node_classes.NodeNG
 ) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=validate_node_children_exclusive_allow_list, location=node)
+    message = AstValidationResultBuilder(validator=validate_node_children_exclusive_allow_list, location=node)
 
     unallowed_nodes = []
     for node in node.get_children():
@@ -31,7 +31,7 @@ def validate_node_children_exclusive_allow_list(
 def validate_node_descendants_allow_list(
     allow_list: Tuple[astroid.node_classes.NodeNG], node: astroid.node_classes.NodeNG
 ) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=validate_node_descendants_allow_list, location=node)
+    message = AstValidationResultBuilder(validator=validate_node_descendants_allow_list, location=node)
 
     unallowed_nodes = []
     for node in node.get_children():

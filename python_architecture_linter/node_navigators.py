@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, Iterable, Tuple, Union
+from typing import Callable, Iterable, List, Tuple, Union
 
 import astroid
 
@@ -7,7 +7,7 @@ from python_architecture_linter.domain_objects.file import File
 
 
 # todo find better names, to_files and to_file is easy to conflate
-def project_to_files(project_path: str) -> Iterable[File]:
+def project_to_files(project_path: str) -> Iterable[List[File]]:
     """
     When you want all files at the same time
     """

@@ -36,7 +36,7 @@ jobs:
 
       - name: Lint with flake8 --ignore=E501
         run: |
-          poetry run flake8 . --count --show-source --statistics
+          poetry run flake8 . --count --show-source --statistics --ignore=E501
 
       - name: Lint with isort
         run: |
@@ -44,9 +44,8 @@ jobs:
 
       - name: Test with pytest
         run: |
-          poetry run coverage run -m pytest python_architecture_linter -x --junitxml=report.xml
+          poetry run coverage run -m pytest . -x
           poetry run coverage report
-          poetry run coverage xml
 
       - name: Check poetry lock file
         run: |

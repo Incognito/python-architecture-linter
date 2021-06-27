@@ -1,6 +1,6 @@
 from functools import partial
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import Iterable
 
 import astroid
 
@@ -16,7 +16,7 @@ from python_architecture_linter.ast_validators.nodeng_validator import (
 )
 from python_architecture_linter.domain_objects.file import File
 from python_architecture_linter.domain_objects.validation_result import (
-    AstValidationMessageBuilder,
+    AstValidationResultBuilder,
     ValidationResult,
 )
 
@@ -55,14 +55,14 @@ def must_only_be_in_run_modules(run_file: File) -> ValidationResult:
         return ValidationResult(
             explanation="Run.py files are only allowed in the root of runtime modules",
             is_valid=False,
-            location=run_file.get_path(),
+            location=str(run_file.get_path()),
             validator="must_only_be_in_run_modules",
         )
 
     return ValidationResult(
         explanation="No issues found",
         is_valid=True,
-        location=run_file.get_path(),
+        location=str(run_file.get_path()),
         validator="must_only_be_in_run_modules",
     )
 
@@ -112,7 +112,7 @@ must_not_contain_logic = partial(
 
 
 def must_have_no_arguments_in_provider_method(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=must_have_no_arguments_in_provider_method, location=func_node)
+    message = AstValidationResultBuilder(validator=must_have_no_arguments_in_provider_method, location=func_node)
 
     if func_node.name.startswith(("provide_", "_provide_")):
         if not func_node.args.as_string() == "self":
@@ -123,7 +123,7 @@ def must_have_no_arguments_in_provider_method(func_node: astroid.nodes.FunctionD
 
 
 def must_create_few_objects_in_provider_method(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
-    message = AstValidationMessageBuilder(validator=must_create_few_objects_in_provider_method, location=func_node)
+    message = AstValidationResultBuilder(validator=must_create_few_objects_in_provider_method, location=func_node)
 
     creational_call_count = 0
     for node in recursive_walk(func_node):

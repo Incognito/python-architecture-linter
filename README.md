@@ -2,6 +2,8 @@
 
 Lint your python architecture, not just spacing.
 
+Stability: Prototype.
+
 # Example
 
 ```

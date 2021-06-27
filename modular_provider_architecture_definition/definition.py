@@ -18,7 +18,6 @@ from python_architecture_linter.node_navigators import (
     ast_node_to_specific_children,
     file_to_ast,
     project_to_file_filtered,
-    project_to_files,
 )
 from python_architecture_linter.tree_structure import Structure
 
@@ -101,3 +100,6 @@ project.must(
     ]
 )
 project.has([provider_file, run_file, logic_file])
+
+
+project_definition = project
