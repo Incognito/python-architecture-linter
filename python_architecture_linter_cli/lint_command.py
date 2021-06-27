@@ -13,7 +13,7 @@ def lint_command_factory(project_definition: Structure) -> click.Command:
     """
 
     @click.command()
-    @click.argument("path", default=os.getcwd(), help="Absolute path to the project")
+    @click.argument("path", default=os.getcwd())
     @click.option("--show-success", default=0, help="Show successful validation attempts too")
     def lint_command(path: str, show_success: bool):
         """Runs linter and reports results."""
