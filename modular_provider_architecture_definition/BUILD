@@ -1,7 +1,8 @@
 python_library(
     name="modular_provider_architecture_definition",
-    sources=["**/*.py"]
-		)
+    sources=["**/*.py", "!tests/**"],
+    dependencies=[':astroid'],
+)
 poetry_requirements()
 
 python_tests(
@@ -10,8 +11,10 @@ python_tests(
 ])
 
 python_distribution(
-    name="dist-definition",
-    dependencies=[ ":modular_provider_architecture_definition" , ":python-architecture-linter" ],
+    name="dist_definition",
+    dependencies=[ 
+        ":modular_provider_architecture_definition" 
+    ],
     provides=setup_py(
         name="modular_provider_architecture_definition",
         version="2.21.0",

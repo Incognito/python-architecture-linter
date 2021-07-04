@@ -1,7 +1,7 @@
 python_library(
     name="python_architecture_linter_cli",
-    sources=["**/*.py"]
-		)
+    sources=["**/*.py", "!tests/**"]
+)
 poetry_requirements()
 
 #python_tests(
@@ -9,11 +9,9 @@ poetry_requirements()
 #    sources=["**/test_*.py"
 #])
 
-
 python_distribution(
-    name="dist-cli",
+    name="dist_cli",
     dependencies=[ 
-        ":python-architecture-linter",
         ":python_architecture_linter_cli"
     ],
     provides=setup_py(

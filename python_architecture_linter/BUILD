@@ -1,4 +1,8 @@
-python_library(sources=["**/*.py"])
+python_library(
+    name="python_architecture_linter",
+    sources=["**/*.py", "!tests/*/**", "!tests/**"],
+    dependencies=[':astroid'],
+)
 
 poetry_requirements()
 

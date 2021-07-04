@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python-architecture-linter-cli"
+name = "python_architecture_linter_cli"
 version = "0.1.0"
 description = "CLI to Lint architecture"
 authors = ["Brian Graham <Brian@statagroup.com>"]
@@ -8,7 +8,6 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 click = "^8.0.1"
-python-architecture-linter = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
