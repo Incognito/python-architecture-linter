@@ -67,4 +67,6 @@ jobs:
       - name: Deploy packages
         run: |
           pip install twine
+          TWINE_PASSWORD=__token__ \
+          TWINE_USERNAME=${{ secrets.PYPI_API_TOKEN }} \
           twine upload --repository-url https://test.pypi.org/legacy/ dist/*
