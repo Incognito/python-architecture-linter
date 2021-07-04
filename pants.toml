@@ -1,0 +1,4 @@
+[GLOBAL]
+pants_version = "2.5.1rc3"
+
+backend_packages = ["pants.backend.python"]

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python-architecture-linter"
+name = "python-architecture-linter-monorepo"
 version = "0.1.0"
 description = "monorepo for the python architecture linter"
 authors = ["Brian Graham <Brian@statagroup.com>"]

@@ -1,0 +1,9 @@
+[tool.poetry]
+name = "demo_project"
+version = "0.1.0"
+description = "Should not be released as anything useful, just a demo"
+authors = ["Brian Graham <Brian@statagroup.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
