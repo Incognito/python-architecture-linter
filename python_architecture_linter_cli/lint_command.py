@@ -4,7 +4,7 @@ import sys
 import click
 
 from python_architecture_linter import Linter
-from python_architecture_linter.tree_structure import Structure
+from python_architecture_linter import Structure
 
 
 def lint_command_factory(project_definition: Structure) -> click.Command:
