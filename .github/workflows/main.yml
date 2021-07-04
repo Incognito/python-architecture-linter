@@ -60,6 +60,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
+        with:
           python-version: '3.9'
       - name: Build packages
         run: |
@@ -67,6 +68,6 @@ jobs:
       - name: Deploy packages
         run: |
           pip install twine
-          TWINE_PASSWORD=__token__ \
-          TWINE_USERNAME=${{ secrets.PYPI_API_TOKEN }} \
-          twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          TWINE_USERNAME="__token__" \
+          TWINE_PASSWORD="${{ secrets.PYPI_API_TOKEN }}" \
+          twine upload dist/* --verbose
