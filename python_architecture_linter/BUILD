@@ -18,7 +18,7 @@ python_distribution(
     ],
     provides=setup_py(
         name="python_architecture_linter",
-        version="0.1.2",
+        version="0.1.3",
         description="Core lib for linter.",
         author="Brian Graham",
         classifiers=[
