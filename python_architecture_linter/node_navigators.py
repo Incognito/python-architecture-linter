@@ -11,24 +11,24 @@ def project_to_files(project_path: str) -> Iterable[List[File]]:
     """
     When you want all files at the same time
     """
-    paths = Path(project_path).glob("**/*.py")
-    yield [File(path) for path in paths]
+    paths = Path(project_path).glob("**/*")
+    yield [File(path) for path in paths if path.is_file()]
 
 
 def project_to_file(project_path: str) -> Iterable[File]:
     """
     When you want files one-by-one
     """
-    paths = Path(project_path).glob("**/*.py")
-    yield from (File(path) for path in paths)
+    paths = Path(project_path).glob("**/*")
+    yield from (File(path) for path in paths if path.is_file())
 
 
 def project_to_file_filtered(file_filter: Callable[[Path], bool], project_path: str) -> Iterable[File]:
     """
     When you want files one-by-one
     """
-    paths = Path(project_path).glob("**/*.py")
-    yield from (File(path) for path in paths if file_filter(path))
+    paths = Path(project_path).glob("**/*")
+    yield from (File(path) for path in paths if file_filter(path) and path.is_file())
 
 
 def file_to_ast(file: File) -> Iterable[astroid.node_classes.NodeNG]:
