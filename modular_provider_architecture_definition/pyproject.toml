@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "modular_provider_architecture_definition"
-version = "0.1.0"
+version = "0.1.2"
 description = "architecture definition for a modular architecture based around instance providers"
 authors = ["Brian Graham <Brian@statagroup.com>"]
 license = "MIT"
