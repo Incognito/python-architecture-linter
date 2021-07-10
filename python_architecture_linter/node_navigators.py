@@ -25,7 +25,7 @@ def project_to_file(project_path: str) -> Iterable[File]:
 
 def project_to_file_filtered(file_filter: Callable[[Path], bool], project_path: str) -> Iterable[File]:
     """
-    When you want files one-by-one
+    When you want files one-by-one but filtered
     """
     paths = Path(project_path).glob("**/*")
     yield from (File(path) for path in paths if file_filter(path) and path.is_file())

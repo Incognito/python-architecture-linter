@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.9"
 astroid = "^2.5.8"
 click = "^8.0.1"
+grimp = "^1.2.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -34,7 +35,7 @@ exclude = '''
 '''
 
 [tool.coverage.run]
-source = ["./python_architecture_linter", "./python_architecture_linter_cli", "./modular_provider_architecture_definition"]
+source = ["./python_architecture_linter", "./python_architecture_linter_cli", "./modular_provider_architecture_definition", "./python_architecture_linter_grimp_extension"]
 
 [tool.isort]
 profile = "black"
