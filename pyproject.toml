@@ -34,7 +34,7 @@ exclude = '''
 '''
 
 [tool.coverage.run]
-source = ["./python_architecture_linter"]
+source = ["./python_architecture_linter", "./python_architecture_linter_cli", "./modular_provider_architecture_definition"]
 
 [tool.isort]
 profile = "black"

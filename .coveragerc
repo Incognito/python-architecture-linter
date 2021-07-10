@@ -1,5 +1,3 @@
 [run]
-omit =
-    */tests/*
-    */.cache/*
+omit=**/tests/**
 
