@@ -1,53 +1,47 @@
-from unittest.mock import patch, Mock
 from click.testing import CliRunner
-
-from python_architecture_linter import Structure, ValidationResult, Linter
 from python_architecture_linter_cli.lint_command import lint_command_factory
 
+from python_architecture_linter import Structure, ValidationResult
 
-def test_command_creation():
+
+def test_command_success():
     # Arrange
     # Arrange
-    def must_pass() -> ValidationResult:
+    def must_pass(subject) -> ValidationResult:
         return ValidationResult(
-            explanation="test_explanation",
-            is_valid=True,
-            location="test_location",
-            validator="test_validator"
+            explanation="test_explanation", is_valid=True, location="test_location", validator="test_validator"
         )
-    structure = Structure('TEST', {})
+
+    structure = Structure("TEST", {})
     structure.must([must_pass])
 
     command = lint_command_factory(structure)
 
     # Act
     runner = CliRunner()
-    result = runner.invoke(command, ['FakePath'])
+    result = runner.invoke(command, ["FakePath"])
 
     # Assert
     assert result.exit_code == 0
-    assert result.output == ''
+    assert result.output == ""
 
-def test_command_creation():
+
+def test_command_failure():
     # Arrange
     def must_fail(subject) -> ValidationResult:
         print(subject)
         return ValidationResult(
-            explanation="test_explanation",
-            is_valid=False,
-            location="test_location",
-            validator="test_validator"
+            explanation="test_explanation", is_valid=False, location="test_location", validator="test_validator"
         )
 
-    structure = Structure('TEST', {})
+    structure = Structure("TEST", {})
     structure.must([must_fail])
 
     command = lint_command_factory(structure)
 
     # Act
     runner = CliRunner()
-    result = runner.invoke(command, ['FakePath'])
-
+    result = runner.invoke(command, ["FakePath"])
 
     # Assert
     assert result.exit_code == 1
