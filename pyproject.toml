@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python-architecture-linter-monorepo"
+name = "python-architecture-linter"
 version = "0.1.0"
 description = "monorepo for the python architecture linter"
 authors = ["Brian Graham <Brian@statagroup.com>"]
@@ -42,7 +42,7 @@ profile = "black"
 atomic = true
 include_trailing_comma = true
 use_parentheses = true
-src_paths = ["python_architecture_linter", "tests"]
+src_paths = ["python_architecture_linter", "python_architecture_linter_cli", "modular_provider_architecture_definition", "python_architecture_linter_grimp_extension"]
 skip_glob = []
 filter_files = true
 known_first_party = "python_architecture_linter"

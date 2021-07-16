@@ -21,10 +21,7 @@ class AstValidationResultBuilder:
     def _validation_factory(self, is_valid, validator, location, explanation) -> ValidationResult:
         validator_as_string = ".".join([validator.__module__, validator.__name__])
         result = ValidationResult(
-            explanation=explanation,
-            is_valid=is_valid,
-            location=location,
-            validator=validator_as_string,
+            explanation=explanation, is_valid=is_valid, location=location, validator=validator_as_string
         )
 
         return result

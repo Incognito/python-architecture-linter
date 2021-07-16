@@ -78,4 +78,9 @@ jobs:
           pip install twine
           TWINE_USERNAME="__token__" \
           TWINE_PASSWORD="${{ secrets.PYPI_API_TOKEN }}" \
-          twine upload dist/* --verbose
+          twine upload dist/* --verbose || true
+            #  || true     - override because pants will fail if a package was
+            #  already released to pypi but I don't actually want it to fail,
+            #  and if the deploy is bad I'll manually look into it. Mostly, I
+            #  just don't want this job to make it look like the build is
+            #  broken because a package was already released.

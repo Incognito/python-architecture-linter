@@ -1,7 +1,7 @@
 from click.testing import CliRunner
-from python_architecture_linter_cli.lint_command import lint_command_factory
 
 from python_architecture_linter import Structure, ValidationResult
+from python_architecture_linter_cli.lint_command import lint_command_factory
 
 
 def test_command_success():
@@ -44,4 +44,4 @@ def test_command_failure():
 
     # Assert
     assert result.exit_code == 1
-    assert result.output == "FakePath\ntest_validator\ntest_location\ntest_explanation\n\n"
+    assert result.output == "test_validator\ntest_location\ntest_explanation\n\n"

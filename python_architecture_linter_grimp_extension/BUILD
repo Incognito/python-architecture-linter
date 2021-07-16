@@ -7,13 +7,12 @@ poetry_requirements()
 python_distribution(
     name="dist_grimp_ext",
     dependencies=[ 
-        ":python_architecture_linter"
-        ":grimp"
+        ":python_architecture_linter_grimp_extension"
     ],
     provides=setup_py(
         name="python_architecture_linter_grimp_extension",
-        version="0.1.2",
-        description="Plug grimp into python-architecture-linter"
+        version="0.1.0",
+        description="Plug grimp into python-architecture-linter",
         author="Brian Graham",
         classifiers=[
             "Programming Language :: Python :: 3.9",
