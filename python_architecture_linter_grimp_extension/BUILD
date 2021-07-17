@@ -11,7 +11,7 @@ python_distribution(
     ],
     provides=setup_py(
         name="python_architecture_linter_grimp_extension",
-        version="0.1.0",
+        version="0.1.1",
         description="Plug grimp into python-architecture-linter",
         author="Brian Graham",
         classifiers=[
