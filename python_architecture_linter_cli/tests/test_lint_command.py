@@ -44,4 +44,4 @@ def test_command_failure():
 
     # Assert
     assert result.exit_code == 1
-    assert result.output == "test_validator\ntest_location\ntest_explanation\n\n"
+    assert result.output == "test_validator\ntest_location\ntest_explanation\n\n\n"
