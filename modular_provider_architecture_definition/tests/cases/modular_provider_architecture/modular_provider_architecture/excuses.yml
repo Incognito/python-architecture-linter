@@ -1,0 +1,7 @@
+- !ValidationResult
+  explanation: "provider.py files are meant to wire together one module, and modules\
+    \ are meant to be one level deep. Providers were found that are not at the root\
+    \ level of a module. \n- module_runtime/provider.py\n- logic_module/provider.py\n"
+  is_valid: false
+  location: /home/brian/python-architecture-linter-monorepo/modular_provider_architecture_definition/tests/cases/modular_provider_architecture/modular_provider_architecture/
+  validator: must_only_have_provider_in_module_root

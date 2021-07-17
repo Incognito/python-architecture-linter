@@ -72,13 +72,14 @@ def filename_filter(file_name: str, path: Path) -> bool:
     return path.name == file_name
 
 
-def filename_exclusion_filter(file_names: List[str], path: Path) -> bool:
-    return path.name not in file_names
+def filename_exclusion_filter(file_names: List[str], extension, path: Path) -> bool:
+    return path.name not in file_names and path.name.endswith(extension)
 
 
 run_file_filter = partial(filename_filter, "run.py")
 provider_file_filter = partial(filename_filter, "provider.py")
-logic_file_filter = partial(filename_exclusion_filter, ["provider.py", "run.py"])
+
+logic_file_filter = partial(filename_exclusion_filter, ["provider.py", "run.py"], ".py")
 
 project = Structure(
     "PROJECT",

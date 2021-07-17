@@ -17,7 +17,7 @@ python_distribution(
     ],
     provides=setup_py(
         name="modular_provider_architecture_definition",
-        version="0.1.3",
+        version="0.1.4",
         description="An example distribution built with Pants.",
         author="Pantsbuild",
         classifiers=[
