@@ -13,12 +13,13 @@ def validate_node_children_exclusive_allow_list(
 ) -> ValidationResult:
     message = AstValidationResultBuilder(validator=validate_node_children_exclusive_allow_list, location=node)
 
-    unallowed_nodes = []
-    for node in node.get_children():
-        if not isinstance(node, allow_list):
-            unallowed_nodes.append(node)
+    unallowed_nodes = [
+        node
+        for node in node.get_children()
+        if not isinstance(node, allow_list)
+    ]
 
-    if len(unallowed_nodes) > 0:
+    if unallowed_nodes:
         explanation = "Node contains children which are not in the allow list\n"
         for unallowed_node in unallowed_nodes:
             explanation += f"- found '{type(unallowed_node).__name__}'  on line {unallowed_node.lineno},   column {unallowed_node.col_offset}: \n"
@@ -33,12 +34,13 @@ def validate_node_descendants_allow_list(
 ) -> ValidationResult:
     message = AstValidationResultBuilder(validator=validate_node_descendants_allow_list, location=node)
 
-    unallowed_nodes = []
-    for node in node.get_children():
-        if not isinstance(node, allow_list):
-            unallowed_nodes.append(node)
+    unallowed_nodes = [
+        node
+        for node in node.get_children()
+        if not isinstance(node, allow_list)
+    ]
 
-    if len(unallowed_nodes) > 0:
+    if unallowed_nodes:
         explanation = "Node contains descendants which are not in the allow list\n"
         for unallowed_node in unallowed_nodes:
             explanation += f"- found '{type(unallowed_node).__name__}'  on line {unallowed_node.lineno},   column {unallowed_node.col_offset}: \n"

@@ -11,6 +11,4 @@ def file_to_module(project_path: str, target_file: str) -> str:
     if path_parts[-1] == "__init__":
         path_parts.pop()
 
-    module_path = ".".join(path_parts)
-
-    return module_path
+    return ".".join(path_parts)

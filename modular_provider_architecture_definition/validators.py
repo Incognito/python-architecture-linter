@@ -28,7 +28,7 @@ def must_only_have_provider_in_module_root(project_path: str) -> ValidationResul
 
     providers_not_in_module_root = [path for path in paths_relative_to_project if len(path.parts) != 3]
 
-    if len(providers_not_in_module_root) > 0:
+    if providers_not_in_module_root:
         explanation = "provider.py files are meant to wire together one module, and modules are meant to be one level deep. Providers were found that are not at the root level of a module. \n"
 
         for provider in providers_not_in_module_root:
@@ -110,11 +110,13 @@ must_not_contain_logic = partial(
 def must_have_no_arguments_in_provider_method(func_node: astroid.nodes.FunctionDef) -> ValidationResult:
     message = AstValidationResultBuilder(validator=must_have_no_arguments_in_provider_method, location=func_node)
 
-    if func_node.name.startswith(("provide_", "_provide_")):
-        if not func_node.args.as_string() == "self":
-            return message.invalid_result(
-                f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self"
-            )
+    if (
+        func_node.name.startswith(("provide_", "_provide_"))
+        and func_node.args.as_string() != "self"
+    ):
+        return message.invalid_result(
+            f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self"
+        )
     return message.valid_result("No issues found")
 
 
