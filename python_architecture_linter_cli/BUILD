@@ -16,7 +16,7 @@ python_distribution(
     ],
     provides=setup_py(
         name="python_architecture_linter_cli",
-        version="0.1.3",
+        version="0.1.4",
         description="An example distribution built with Pants.",
         author="Pantsbuild",
         classifiers=[

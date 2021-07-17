@@ -10,6 +10,7 @@ python = "^3.9"
 astroid = "^2.5.8"
 click = "^8.0.1"
 grimp = "^1.2.3"
+"ruamel.yaml" = "^0.17.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

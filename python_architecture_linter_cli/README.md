@@ -1,6 +1,28 @@
 A basic CLI wrapper for the python architecture linter using click
 
 
+# Key Features
+
+1. Lint entire project architecture based on an injected definition
+1. Maintain a list of excuses for architecture violations which permits CI to pass
+
+
+```
+Usage: python-architecture-linter [OPTIONS] [PATH]
+
+  Runs linter and reports results.
+
+Options:
+  --show-success BOOLEAN        Show successful validation attempts too
+  --with-excuses BOOLEAN        Excuse results stored in excuses.yml
+  --excuse-path TEXT            path of excuses.yml
+  --write-excuses-file BOOLEAN  Replace the excuse file with all violations
+  --help                        Show this message and exit.
+```
+
+[![asciicast](https://asciinema.org/a/425940.svg)](https://asciinema.org/a/425940)
+
+
 # Public API:
 
 This function is public API, a breaking chance will force a major release:

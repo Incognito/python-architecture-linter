@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python_architecture_linter_cli"
-version = "0.1.3"
+version = "0.1.4"
 description = "CLI to Lint architecture"
 authors = ["Brian Graham <Brian@statagroup.com>"]
 license = "MIT"
@@ -8,6 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 click = "^8.0.1"
+"ruamel.yaml" = "^0.17.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
