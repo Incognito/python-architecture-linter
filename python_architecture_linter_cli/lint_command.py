@@ -1,12 +1,20 @@
-from functools import partial
-from typing import Iterable
 import os
 import sys
+from functools import partial
+from typing import Callable, Iterable, List
 
 import click
 
 from python_architecture_linter import Linter, Structure, ValidationResult
-from python_architecture_linter_cli.steps import filter_out_excuses, filter_out_successes, display_results, write_excuses_to_file, identity
+from python_architecture_linter_cli.steps import (
+    display_results,
+    filter_out_excuses,
+    filter_out_successes,
+    identity,
+    truncate_project_path_from_locations,
+    write_excuses_to_file,
+)
+
 
 def get_lint_results(project_definition, path) -> Iterable[ValidationResult]:
     linter = Linter(project_definition)
@@ -19,6 +27,7 @@ def determine_exit_code(is_valid_flags: Iterable[bool]) -> int:
             return 1
 
     return 0
+
 
 def lint_command_factory(project_definition: Structure) -> click.Command:
     """
@@ -40,18 +49,21 @@ def lint_command_factory(project_definition: Structure) -> click.Command:
     ):
         """Runs linter and reports results."""
 
-        excuse_path = path + '/excuses.yml' if excuse_path == "" else excuse_path
+        excuse_path = path + "/excuses.yml" if excuse_path == "" else excuse_path
 
-        steps = [
+        # Mypy cannot understand partials
+        steps: List[Callable[[Iterable[ValidationResult]], Iterable[ValidationResult]]] = [
+            partial(truncate_project_path_from_locations, path),  # type: ignore
             filter_out_successes if not show_success else identity,
-            partial(filter_out_excuses, excuse_path) if with_excuses else identity,
+            partial(filter_out_excuses, excuse_path) if with_excuses else identity,  # type: ignore
             display_results,
-            partial(write_excuses_to_file, excuse_path) if write_excuses_file else identity,
+            partial(write_excuses_to_file, excuse_path) if write_excuses_file else identity,  # type: ignore
         ]
 
         results = get_lint_results(project_definition, path)
         for step in steps:
-            results = step(results)
+            # Mypy cannot understand partials
+            results = step(results)  # type: ignore
 
         # Runs the generator over the entire data-set and reduces each dataclass to one boolean
         is_valid_flags = [result.is_valid for result in results]
@@ -60,5 +72,6 @@ def lint_command_factory(project_definition: Structure) -> click.Command:
         sys.exit(exit_code)
 
     return lint_command
+
 
 # todo make excuses project-relative.
