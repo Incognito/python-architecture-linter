@@ -72,6 +72,3 @@ def lint_command_factory(project_definition: Structure) -> click.Command:
         sys.exit(exit_code)
 
     return lint_command
-
-
-# todo make excuses project-relative.

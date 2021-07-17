@@ -53,7 +53,6 @@ def display_results(results: Iterable[ValidationResult]) -> Iterable[ValidationR
         yield result
 
 
-# todo version the excuses file
 def write_excuses_to_file(target_file: str, results: Iterable[ValidationResult]) -> Iterable[ValidationResult]:
     yaml = YAML()
     yaml.register_class(ValidationResult)
