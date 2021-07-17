@@ -5,8 +5,10 @@ from python_architecture_linter_grimp_extension.grimp_navigators import (
     import_statements_to_graph,
 )
 
+
 def must(graph):
     print(graph.modules)
+
 
 import_graph = Structure("IMPORT_GRAPH", {})
 import_graph.must([must])

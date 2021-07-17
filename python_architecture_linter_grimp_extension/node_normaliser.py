@@ -28,10 +28,10 @@ def normalise_import_from(import_statement: astroid.nodes.ImportFrom) -> Iterabl
 def normalise_import(import_statement: astroid.nodes.Import) -> Iterable[ImportDTO]:
     importer_module = import_statement.root().name
 
-    for name in import_statement.names:
+    for name, alias in import_statement.names:
         yield ImportDTO(
             importer=importer_module,
-            imported=import_statement.modname,
+            imported=name,
             line_number=import_statement.lineno,
             line_contents=import_statement.as_string(),
         )

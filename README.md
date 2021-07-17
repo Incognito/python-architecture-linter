@@ -14,6 +14,7 @@ Releases
 
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter.svg)](https://pypi.python.org/pypi/python-architecture-linter/) python-architecture-linter
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter-cli.svg)](https://pypi.python.org/pypi/python-architecture-linter-cli/) python-architecture-linter-cli
+- [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-grimp-extension.svg)](https://pypi.python.org/pypi/python-architecture-linter-grimp-extension/) python-architecture-grimp-extension
 - [![PyPI version fury.io](https://badge.fury.io/py/modular-provider-architecture-definition.svg)](https://pypi.python.org/pypi/modular-provider-architecture-definition/) modular-provider-architecture-definition
 
 
