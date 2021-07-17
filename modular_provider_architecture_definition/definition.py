@@ -85,8 +85,7 @@ project = Structure(
     {
         "RUN_FILE": partial(project_to_file_filtered, run_file_filter),
         "PROVIDER_FILE": partial(project_to_file_filtered, provider_file_filter),
-        "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter)
-        # todo: dependency graph
+        "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter),
     },
 )
 project.must([must_only_have_provider_in_module_root])

@@ -5,6 +5,7 @@ Stability: Prototype. API may change without warning.
 [![Python Architecture Linter](https://github.com/Incognito/python-architecture-linter/actions/workflows/main.yml/badge.svg)](https://github.com/Incognito/python-architecture-linter/actions/workflows/main.yml)
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=python-architecture-linter&metric=coverage)](https://sonarcloud.io/dashboard?id=python-architecture-linter)
+[![CodeFactor](https://www.codefactor.io/repository/github/incognito/python-architecture-linter/badge)](https://www.codefactor.io/repository/github/incognito/python-architecture-linter)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=python-architecture-linter&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=python-architecture-linter)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=python-architecture-linter&metric=security_rating)](https://sonarcloud.io/dashboard?id=python-architecture-linter)
 
