@@ -37,11 +37,13 @@ def filter_out_excuses(excuses_path: str, results: Iterable[ValidationResult]) -
 
 def display_result(result: ValidationResult) -> None:
     if result.is_valid:
-        click.secho(result.validator, bg="green")
+        click.secho(result.validator, bg="green", bold=True)
+        click.secho(result.location, bg="green")
     else:
-        click.secho(result.validator, bg="red")
-    click.echo(result.location)
+        click.secho(result.validator, bg="red", bold=True)
+        click.secho(result.location, bg="red")
     click.echo(result.explanation)
+    click.echo("")
     click.echo("")
 
 
