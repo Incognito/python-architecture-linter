@@ -14,9 +14,9 @@ def validate_node_children_exclusive_allow_list(
     message = AstValidationResultBuilder(validator=validate_node_children_exclusive_allow_list, location=node)
 
     unallowed_nodes = []
-    for node in node.get_children():
-        if not isinstance(node, allow_list):
-            unallowed_nodes.append(node)
+    for child_node in node.get_children():
+        if not isinstance(child_node, allow_list):
+            unallowed_nodes.append(child_node)
 
     if len(unallowed_nodes) > 0:
         explanation = "Node contains children which are not in the allow list\n"
@@ -34,9 +34,9 @@ def validate_node_descendants_allow_list(
     message = AstValidationResultBuilder(validator=validate_node_descendants_allow_list, location=node)
 
     unallowed_nodes = []
-    for node in node.get_children():
-        if not isinstance(node, allow_list):
-            unallowed_nodes.append(node)
+    for child_node in node.get_children():
+        if not isinstance(child_node, allow_list):
+            unallowed_nodes.append(child_node)
 
     if len(unallowed_nodes) > 0:
         explanation = "Node contains descendants which are not in the allow list\n"
@@ -48,7 +48,7 @@ def validate_node_descendants_allow_list(
     return message.valid_result("No issues found")
 
 
-# todo this doesn't really belong in "validators", probably better as a navigator.
+# todo this needs to be more shared, it is useful in multiple contexts
 def recursive_walk(node: astroid.node_classes.NodeNG) -> Iterable[astroid.node_classes.NodeNG]:
     try:
         for subnode in node.get_children():

@@ -74,11 +74,7 @@ must_suffix_provider_classes = partial(class_name_suffix_validator, "Provider")
 
 must_only_import_and_define_classes = partial(
     validate_node_children_exclusive_allow_list,
-    (
-        astroid.nodes.Import,
-        astroid.nodes.ImportFrom,
-        astroid.nodes.ClassDef,
-    ),
+    (astroid.nodes.Import, astroid.nodes.ImportFrom, astroid.nodes.ClassDef),
 )
 
 must_not_contain_logic = partial(
@@ -117,7 +113,7 @@ def must_have_no_arguments_in_provider_method(func_node: astroid.nodes.FunctionD
     if func_node.name.startswith(("provide_", "_provide_")):
         if not func_node.args.as_string() == "self":
             return message.invalid_result(
-                f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self",
+                f"invalid arguments in method name {func_node.name}({func_node.args.as_string()}), should only receive self"
             )
     return message.valid_result("No issues found")
 
@@ -134,7 +130,7 @@ def must_create_few_objects_in_provider_method(func_node: astroid.nodes.Function
 
     if creational_call_count > 4:
         return message.invalid_result(
-            f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid",
+            f"Too many business objects are created in {func_node.name}. This would create tight-coupling of object creation, which the provider aims to avoid"
         )
 
     return message.valid_result("No issues found")

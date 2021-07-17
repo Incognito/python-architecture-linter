@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 
 import astroid
+
 from modular_provider_architecture_definition.validators import (
     must_create_few_objects_in_provider_method,
     must_have_no_arguments_in_provider_method,
@@ -13,7 +14,6 @@ from modular_provider_architecture_definition.validators import (
     must_suffix_provider_classes,
     must_use_provider_method_names,
 )
-
 from python_architecture_linter.node_navigators import (
     ast_node_to_specific_children,
     file_to_ast,
@@ -61,12 +61,7 @@ logic_ast_module.must(
     ]
 )
 
-logic_file = Structure(
-    "LOGIC_FILE",
-    {
-        "LOGIC_AST_MODULE": file_to_ast,
-    },
-)
+logic_file = Structure("LOGIC_FILE", {"LOGIC_AST_MODULE": file_to_ast})
 logic_file.has([logic_ast_module])
 
 run_file = Structure("RUN_FILE", {})
@@ -90,15 +85,10 @@ project = Structure(
     {
         "RUN_FILE": partial(project_to_file_filtered, run_file_filter),
         "PROVIDER_FILE": partial(project_to_file_filtered, provider_file_filter),
-        "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter)
-        # todo: dependency graph
+        "LOGIC_FILE": partial(project_to_file_filtered, logic_file_filter),
     },
 )
-project.must(
-    [
-        must_only_have_provider_in_module_root,
-    ]
-)
+project.must([must_only_have_provider_in_module_root])
 project.has([provider_file, run_file, logic_file])
 
 

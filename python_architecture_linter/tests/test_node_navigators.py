@@ -54,7 +54,7 @@ def test_file_to_ast():
             print("hello world")
             """
 
-    file = MockFile(Path("fakefile"))
+    file = MockFile(path=Path("/project/fakefile"), project_root=Path("/project/"))
 
     # Act
     sut = list(file_to_ast(file))

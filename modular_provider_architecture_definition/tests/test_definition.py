@@ -1,7 +1,6 @@
 import os
 
 from modular_provider_architecture_definition import project_definition
-
 from python_architecture_linter import Linter
 from python_architecture_linter.domain_objects.validation_result import ValidationResult
 
