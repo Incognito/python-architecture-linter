@@ -20,6 +20,9 @@ Options:
   --help                        Show this message and exit.
 ```
 
+[![asciicast](https://asciinema.org/a/425940.svg)](https://asciinema.org/a/425940)
+
+
 # Public API:
 
 This function is public API, a breaking chance will force a major release:
