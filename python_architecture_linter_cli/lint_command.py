@@ -53,7 +53,7 @@ def lint_command_factory(project_definition: Structure) -> click.Command:
         for step in steps:
             results = step(results)
 
-        # Runs the generator over the entire data-set and reduces each idataclass to one boolean
+        # Runs the generator over the entire data-set and reduces each dataclass to one boolean
         is_valid_flags = [result.is_valid for result in results]
         exit_code = determine_exit_code(is_valid_flags)
 
