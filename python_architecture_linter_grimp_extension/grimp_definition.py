@@ -1,3 +1,9 @@
+from grimp_package_metrics import (
+    PackageMetrics,
+    dependency_cycles,
+    get_all_package_metrics,
+)
+
 from python_architecture_linter import Structure
 from python_architecture_linter.node_navigators import project_to_files
 from python_architecture_linter_grimp_extension.grimp_navigators import (

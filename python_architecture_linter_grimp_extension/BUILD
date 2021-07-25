@@ -8,6 +8,7 @@ python_distribution(
     name="dist_grimp_ext",
     dependencies=[ 
         ":python_architecture_linter_grimp_extension"
+        ":grimp"
     ],
     provides=setup_py(
         name="python_architecture_linter_grimp_extension",
