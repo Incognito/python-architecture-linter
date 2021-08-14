@@ -14,7 +14,6 @@ python_distribution(
     name="dist_definition",
     dependencies=[ 
         ":modular_provider_architecture_definition",
-        ":grimp_package_metrics" 
     ],
     provides=setup_py(
         name="modular_provider_architecture_definition",

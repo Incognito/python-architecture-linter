@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python_architecture_linter_grimp_extension"
-version = "0.1.1"
+version = "0.1.2"
 description = "Plug grimp into python-architecture-linter"
 authors = ["Brian Graham <Brian@statagroup.com>"]
 license = "MIT"
