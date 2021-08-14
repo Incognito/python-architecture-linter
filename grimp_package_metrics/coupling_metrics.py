@@ -72,9 +72,6 @@ def compute_metrics(graph: ImportGraph, module: str) -> PackageMetrics:
         instability=instability,
     )
 
-    # abstractness = 0
-    # distance_from_main_sequence = abs(abstractness + instability -1)
-
 
 def get_all_package_metrics(graph: ImportGraph) -> Iterator[PackageMetrics]:
     for module in graph.modules:
