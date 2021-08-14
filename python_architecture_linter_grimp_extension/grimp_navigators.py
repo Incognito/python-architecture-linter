@@ -45,7 +45,6 @@ def import_statements_to_graph(imports: List[ImportDTO]) -> Iterable[ImportGraph
     graph = ImportGraph()
 
     for import_dto in imports:
-        print(f'"{import_dto.importer}" -> "{import_dto.imported}"')
         graph.add_import(
             importer=import_dto.importer,
             imported=import_dto.imported,

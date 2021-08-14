@@ -75,8 +75,8 @@ Your software dependencies should look one-way:
  └────────────┘
 ```
 
-If you have any "cycles" in your architecture it is likely that oyu need to
-make a simple package in-between to kepe the common information (often this is
+If you have any "cycles" in your architecture it is likely that you need to
+make a simple package in-between to keep the common information (often this is
 just an interface or some similar data)
 
 In this architecture there are two major types of object instances:

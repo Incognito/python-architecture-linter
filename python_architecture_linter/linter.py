@@ -1,3 +1,4 @@
+import copy
 from typing import Iterable
 
 from python_architecture_linter.domain_objects.validation_result import ValidationResult
@@ -19,7 +20,7 @@ class Linter:
 
     def _evaluate_must(self, target: LintTargetGenericType):
         for must in self._structure.get_must():
-            yield must(target)
+            yield must(copy.deepcopy(target))
 
     def _evaluate_has(self, target: LintTargetGenericType):
         from_navigation = self._structure.get_navigation()

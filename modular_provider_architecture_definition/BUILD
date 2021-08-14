@@ -13,7 +13,7 @@ python_tests(
 python_distribution(
     name="dist_definition",
     dependencies=[ 
-        ":modular_provider_architecture_definition" 
+        ":modular_provider_architecture_definition",
     ],
     provides=setup_py(
         name="modular_provider_architecture_definition",

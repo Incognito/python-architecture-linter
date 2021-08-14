@@ -1,5 +1,5 @@
 python_library(
-    name="python_architecture_linter_cli",
+    name="grimp_package_metrics",
     sources=["**/*.py", "!tests/**"]
 )
 poetry_requirements()
@@ -12,11 +12,12 @@ poetry_requirements()
 python_distribution(
     name="dist_cli",
     dependencies=[ 
-        ":python_architecture_linter_cli"
+        ":grimp_package_metrics"
+        ":grimp"
     ],
     provides=setup_py(
-        name="python_architecture_linter_cli",
-        version="0.1.5",
+        name="grimp_package_metrics",
+        version="0.1.0",
         description="An example distribution built with Pants.",
         author="Pantsbuild",
         classifiers=[
