@@ -1,5 +1,3 @@
-import copy
-
 from grimp_package_metrics import dependency_cycles, get_all_package_metrics
 
 from python_architecture_linter import Structure
@@ -12,9 +10,6 @@ from python_architecture_linter_grimp_extension.grimp_navigators import (
 
 
 def must_not_have_modules_depend_on_less_stable_modules(graph) -> ValidationResult:
-    # todo should assume clone already happened, needs upstream fix in node navigator
-    graph = copy.deepcopy(graph)
-
     package_metrics = {}
     for metric in get_all_package_metrics(graph):
         package_metrics[metric.package_name] = metric
