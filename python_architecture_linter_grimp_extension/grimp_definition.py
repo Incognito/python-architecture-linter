@@ -15,7 +15,7 @@ def must_not_have_modules_depend_on_less_stable_modules(graph) -> ValidationResu
         package_metrics[metric.package_name] = metric
 
     explanation = ""
-    is_valid = (True,)
+    is_valid = True
     for module in graph.modules:
         target_module_instability = package_metrics[module].instability
 
