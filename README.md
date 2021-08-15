@@ -17,6 +17,8 @@ Releases
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter-cli.svg)](https://pypi.python.org/pypi/python-architecture-linter-cli/) python-architecture-linter-cli
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter-grimp-extension.svg)](https://pypi.python.org/pypi/python-architecture-linter-grimp-extension/) python-architecture-linter-grimp-extension
 - [![PyPI version fury.io](https://badge.fury.io/py/modular-provider-architecture-definition.svg)](https://pypi.python.org/pypi/modular-provider-architecture-definition/) modular-provider-architecture-definition
+- [![PyPI version fury.io](https://badge.fury.io/py/grimp_package_metrics.svg)](https://pypi.python.org/pypi/grimp_package_metrics/) grimp-package-metrics
+
 
 
 Lint your python architecture, not just spacing.

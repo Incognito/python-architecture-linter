@@ -7,9 +7,8 @@ poetry_requirements()
 python_distribution(
     name="dist_grimp_ext",
     dependencies=[ 
-        ":python_architecture_linter_grimp_extension"
+        ":python_architecture_linter_grimp_extension",
         ":grimp",
-        ":grimp_package_metrics" 
     ],
     provides=setup_py(
         name="python_architecture_linter_grimp_extension",
