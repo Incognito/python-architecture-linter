@@ -12,7 +12,7 @@ poetry_requirements()
 python_distribution(
     name="dist_cli",
     dependencies=[ 
-        ":grimp_package_metrics"
+        ":grimp_package_metrics",
         ":grimp"
     ],
     provides=setup_py(
