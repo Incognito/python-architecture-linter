@@ -17,23 +17,23 @@ Releases
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter-cli.svg)](https://pypi.python.org/pypi/python-architecture-linter-cli/) python-architecture-linter-cli
 - [![PyPI version fury.io](https://badge.fury.io/py/python-architecture-linter-grimp-extension.svg)](https://pypi.python.org/pypi/python-architecture-linter-grimp-extension/) python-architecture-linter-grimp-extension
 - [![PyPI version fury.io](https://badge.fury.io/py/modular-provider-architecture-definition.svg)](https://pypi.python.org/pypi/modular-provider-architecture-definition/) modular-provider-architecture-definition
-- [![PyPI version fury.io](https://badge.fury.io/py/grimp_package_metrics.svg)](https://pypi.python.org/pypi/grimp_package_metrics/) grimp-package-metrics
+- [![PyPI version fury.io](https://badge.fury.io/py/grimp_package_metrics.svg)](https://pypi.python.org/pypi/grimp-package-metrics/) grimp-package-metrics
 
 
 
-Lint your python architecture, not just spacing.
+Lint your architecture, not the syntax.
 
 ## What is an Architecture?
-Architecture is not a tech stack technologies you use. For example, using
-Django and Celery is not "an architecture". Architecture introduces design
-constraints that organises the structure of your code and data-flow in a
+Architecture is not a tech stack or set of technologies you use in a project. For example, using
+Django and Celery is not "an architecture". Architecture imposes design
+constraints that enforces the structure of your code and data-flow in a
 system. 
 
 For example, Model-View-Controller is an architecture that constrains where you
-put different kinds of code. If your choice of MVC implies that Views cannot
-*call* Models that is another level of constraint at run-time. If you decide
+put different kinds of code, and what code can call what other code. If your choice of MVC implies that Views cannot
+*call* Models that is an architectural constraint on data-flow. If you decide
 that Views cannot *import* from Models that is an additional leve of
-constraint. You reasons for wanting these three different (but similar)
+constraint to enforce decoupling of code. You reasons for wanting these three different (but similar)
 constraints are specific: 
 
 - MVC itself gives you separation of concerns and better cohesion of your
@@ -44,22 +44,22 @@ constraints are specific:
 
 All three rules can work together and make a project more maintainable, but
 (depending on implementation needs) it could add "overhead work" because you
-have to do extra work. For example, instead of calling the database directly
+have to add extra code to satisfy the constraint. For example, instead of calling the database directly
 from your templates you have to wire the model to the database call and route
-it through the controller and inject the data to the view. These are trade-offs
+it through the controller and inject the data to the view, and possibly re-map the database model to the view model too. These are trade-offs
 in architecture choices which should be aligned with project design goals. If
 you intend to hack a project together in a week and throw it away, maybe you
 don't need those rules from above. Maybe those rules don't work in your
 specific case. It might be that your needs actually change entirely over the
-years and your architecture needs to change to reflect it.
+years and your architecture needs to change to reflect it. Often we find projects become unmaintainable because the architecture goals shifted slowly without anybody noticing or deliberately stating it.
 
 Architecture is a reflection of the conventions a project follows, not what
-tools it uses. Picking Celery or Kafka both have architecture, but using them
-in your project is just an implementation detail of an architecture (not the
+tools it uses. Tools like Celery or Kafka both have their own architectures, but using them
+in your project is just "an implementation detail" of an architecture (not the
 architecture itself). Picking *how* you will use Celery or Kafka is an
-architecture convention. This becomes more obvious when we look at other
-implementation details like Redis or Postgres, you would never say "this
-project has a Redis architecture".
+"architecture convention". This becomes more obvious when we look at other
+implementation details of projects like Redis or Postgres: you would never say "this
+project has a Redis architecture", it sounds funny to say it because it is wrong. Some newer technologies like "AWS lambda" sound like "we use an AWS Lambda Architecture" but that tool itself is not the architecture, it doesn't define conventions, where code belongs, data-flow, or anything meaningful to help you build the system beyond "we use a PaaS solution".
 
 
 ## What is an Architecture Linter?
@@ -68,7 +68,7 @@ Architectures are expressions of a set of architecture conventions. Linters
 validate a project against a set of rules. An Architecture Linter just focuses
 on the Architecture of your project. This is in contrast to the traditional
 jobs done with a Linter like `flake8` or `black`: checking for naming, spacing,
-line-length, etc.
+line-length, import sorting, etc.
 
 There is some prior-work here, notably, `import-linter` which enforces import
 direction rules in a project, and `pylint` which offers lots of code style
